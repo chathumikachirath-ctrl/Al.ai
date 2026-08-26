@@ -1,69 +1,67 @@
-const input = document.getElementById("questionInput");
-const messages = document.getElementById("messages");
+document.addEventListener("DOMContentLoaded", function () {
 
-function addMessage(text, type) {
-    const message = document.createElement("div");
+    const input = document.getElementById("questionInput");
+    const messages = document.getElementById("messages");
 
-    message.classList.add("message");
+    function addMessage(text, type) {
 
-    if (type === "user") {
-        message.classList.add("user-message-chat");
-    } else {
-        message.classList.add("ai-message-chat");
+        const message = document.createElement("div");
+
+        message.classList.add("message");
+
+        if (type === "user") {
+            message.classList.add("user-message-chat");
+        } else {
+            message.classList.add("ai-message-chat");
+        }
+
+        message.textContent = text;
+
+        messages.appendChild(message);
+
+        message.scrollIntoView({
+            behavior: "smooth"
+        });
     }
 
-    message.textContent = text;
 
-    messages.appendChild(message);
+    window.sendQuestion = function () {
 
-    // Automatically scroll to latest message
-    message.scrollIntoView({
-        behavior: "smooth",
-        block: "nearest"
+        const question = input.value.trim();
+
+        if (question === "") {
+            return;
+        }
+
+        addMessage(question, "user");
+
+        input.value = "";
+
+        setTimeout(function () {
+
+            addMessage(
+                "🤖 AI system එක තාම connect කරලා නැහැ. අපි ඊළඟට real AI එක connect කරමු!",
+                "ai"
+            );
+
+        }, 600);
+    };
+
+
+    window.quickQuestion = function (subject) {
+
+        input.value = "Help me learn " + subject;
+
+        input.focus();
+    };
+
+
+    input.addEventListener("keydown", function (event) {
+
+        if (event.key === "Enter") {
+            window.sendQuestion();
+        }
+
     });
-}
-
-
-function sendQuestion() {
-
-    const question = input.value.trim();
-
-    if (question === "") {
-        return;
-    }
-
-    // Add user's message
-    addMessage(question, "user");
-
-    // Clear input
-    input.value = "";
-
-    // Temporary AI response
-    setTimeout(function () {
-
-        addMessage(
-            "🤖 I'm still being connected to the AI system. Soon I'll be able to answer your A/L questions!",
-            "ai"
-        );
-
-    }, 600);
-}
-
-
-// Quick subject buttons
-function quickQuestion(subject) {
-
-    input.value = "Help me learn " + subject;
-
-    input.focus();
-}
-
-
-// Press Enter to send
-input.addEventListener("keydown", function(event) {
-
-    if (event.key === "Enter") {
-        sendQuestion();
-    }
 
 });
