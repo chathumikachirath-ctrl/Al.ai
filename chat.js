@@ -1,6 +1,9 @@
 const input = document.getElementById("questionInput");
 const messages = document.getElementById("messages");
 
+const AI_BACKEND =
+    "https://cold-bonus-bd43.chathumikachirath.workers.dev/api/chat";
+
 
 function addMessage(text, type) {
 
@@ -25,26 +28,88 @@ function addMessage(text, type) {
 }
 
 
-function sendQuestion() {
+async function sendQuestion() {
 
     const question = input.value.trim();
 
-    if (question === "") {
+    if (!question) {
         return;
     }
 
+    // Show user's message
     addMessage(question, "user");
 
+    // Clear input
     input.value = "";
 
-    setTimeout(function () {
+    // Temporary loading message
+    addMessage("🤖 Thinking...", "ai");
+
+    try {
+
+        const response = await fetch(AI_BACKEND, {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+                message: question
+            })
+
+        });
+
+
+        const data = await response.json();
+
+
+        // Remove "Thinking..."
+        const aiMessages =
+            document.querySelectorAll(".ai-message-chat");
+
+        if (aiMessages.length > 0) {
+            aiMessages[aiMessages.length - 1].remove();
+        }
+
+
+        if (!response.ok) {
+
+            console.error("Backend error:", data);
+
+            addMessage(
+                "❌ Sorry, AI එකෙන් answer එක ගන්න බැරි වුණා.",
+                "ai"
+            );
+
+            return;
+        }
+
 
         addMessage(
-            "🤖 I'm currently a demo version. Real AI will be connected soon!",
+            data.answer || "AI එකෙන් answer එකක් ලැබුණේ නැහැ.",
             "ai"
         );
 
-    }, 500);
+
+    } catch (error) {
+
+        console.error("Connection error:", error);
+
+        const aiMessages =
+            document.querySelectorAll(".ai-message-chat");
+
+        if (aiMessages.length > 0) {
+            aiMessages[aiMessages.length - 1].remove();
+        }
+
+        addMessage(
+            "❌ AI server එකට connect වෙන්න බැරි වුණා.",
+            "ai"
+        );
+
+    }
 }
 
 
