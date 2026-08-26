@@ -1,5 +1,5 @@
 function startChat() {
-    alert("🤖 A/L AI Tutor\n\nAI Tutor is coming soon!");
+    window.location.href = "chat.html";
 }
 
 function scrollToSubjects() {
