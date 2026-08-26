@@ -32,18 +32,18 @@ async function sendQuestion() {
 
     const question = input.value.trim();
 
-    if (!question) {
-        return;
-    }
+    if (!question) return;
 
-    // Show user's message
     addMessage(question, "user");
 
-    // Clear input
     input.value = "";
 
-    // Temporary loading message
-    addMessage("🤖 Thinking...", "ai");
+    const thinking = document.createElement("div");
+
+    thinking.className = "message ai-message-chat";
+    thinking.textContent = "🤖 Thinking...";
+
+    messages.appendChild(thinking);
 
     try {
 
@@ -64,48 +64,46 @@ async function sendQuestion() {
 
         const data = await response.json();
 
-
-        // Remove "Thinking..."
-        const aiMessages =
-            document.querySelectorAll(".ai-message-chat");
-
-        if (aiMessages.length > 0) {
-            aiMessages[aiMessages.length - 1].remove();
-        }
+        thinking.remove();
 
 
         if (!response.ok) {
 
             console.error("Backend error:", data);
 
-            addMessage(
-                "❌ Sorry, AI එකෙන් answer එක ගන්න බැරි වුණා.",
-                "ai"
-            );
+            let errorText = "❌ AI Error\n\n";
+
+            if (data.error) {
+                errorText += data.error;
+            }
+
+            if (data.status) {
+                errorText += "\nStatus: " + data.status;
+            }
+
+            if (data.details) {
+                errorText += "\n\nDetails: " +
+                    JSON.stringify(data.details);
+            }
+
+            addMessage(errorText, "ai");
 
             return;
         }
 
 
         addMessage(
-            data.answer || "AI එකෙන් answer එකක් ලැබුණේ නැහැ.",
+            data.answer || "❌ Gemini didn't return an answer.",
             "ai"
         );
 
 
     } catch (error) {
 
-        console.error("Connection error:", error);
-
-        const aiMessages =
-            document.querySelectorAll(".ai-message-chat");
-
-        if (aiMessages.length > 0) {
-            aiMessages[aiMessages.length - 1].remove();
-        }
+        thinking.remove();
 
         addMessage(
-            "❌ AI server එකට connect වෙන්න බැරි වුණා.",
+            "❌ Connection Error\n\n" + error.message,
             "ai"
         );
 
