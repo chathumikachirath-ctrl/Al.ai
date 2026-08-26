@@ -1,27 +1,27 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
 
     const input = document.getElementById("questionInput");
     const messages = document.getElementById("messages");
+
+    if (!input || !messages) {
+        console.error("Chat elements not found.");
+        return;
+    }
 
     function addMessage(text, type) {
 
         const message = document.createElement("div");
 
-        message.classList.add("message");
-
-        if (type === "user") {
-            message.classList.add("user-message-chat");
-        } else {
-            message.classList.add("ai-message-chat");
-        }
+        message.className = "message " +
+            (type === "user"
+                ? "user-message-chat"
+                : "ai-message-chat");
 
         message.textContent = text;
 
         messages.appendChild(message);
 
-        message.scrollIntoView({
-            behavior: "smooth"
-        });
+        messages.scrollTop = messages.scrollHeight;
     }
 
 
@@ -29,18 +29,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const question = input.value.trim();
 
-        if (question === "") {
-            return;
-        }
+        if (!question) return;
 
         addMessage(question, "user");
 
         input.value = "";
 
-        setTimeout(function () {
+        setTimeout(() => {
 
             addMessage(
-                "🤖 AI system එක තාම connect කරලා නැහැ. අපි ඊළඟට real AI එක connect කරමු!",
+                "🤖 AI system එක තාම connect කරලා නැහැ. Real AI එක ඊළඟට connect කරමු!",
                 "ai"
             );
 
@@ -56,10 +54,11 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
 
-    input.addEventListener("keydown", function (event) {
+    input.addEventListener("keydown", (event) => {
 
         if (event.key === "Enter") {
-            window.sendQuestion();
+            event.preventDefault();
+            sendQuestion();
         }
 
     });
