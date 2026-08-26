@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>A/L AI Tutor</title>
+
+    <link rel="stylesheet" href="chat.css">
+</head>
+
+
+<body>
+
+    <!-- Header -->
+
+    <header class="chat-header">
+
+        <a href="index.html" class="back-btn">
+            ←
+        </a>
+
+        <div class="chat-logo">
+
+            <div class="bot-icon">
+                🤖
+            </div>
+
+            <div>
+                <h2>A/L AI Tutor</h2>
+                <span>● Online</span>
+            </div>
+
+        </div>
+
+        <button class="menu-btn">
+            ⋮
+        </button>
+
+    </header>
+
+
+
+    <!-- Chat Area -->
+
+    <main class="chat-container">
+
+        <div class="welcome">
+
+            <div class="big-bot">
+                🤖
+            </div>
+
+            <h1>
+                Hi! I'm A/L AI 👋
+            </h1>
+
+            <p>
+                Your personal AI study assistant.
+                Ask me anything about your A/L subjects.
+            </p>
+
+
+            <!-- Quick Subjects -->
+
+            <div class="quick-buttons">
+
+                <button onclick="quickQuestion('Combined Mathematics')">
+                    🧮 Maths
+                </button>
+
+                <button onclick="quickQuestion('Physics')">
+                    ⚡ Physics
+                </button>
+
+                <button onclick="quickQuestion('ICT')">
+                    💻 ICT
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- Messages appear here -->
+
+        <div id="messages"></div>
+
+    </main>
+
+
+
+    <!-- Input Area -->
+
+    <footer class="input-area">
+
+        <div class="input-box">
+
+            <button class="attach-btn">
+                📎
+            </button>
+
+            <input
+                type="text"
+                id="questionInput"
+                placeholder="Ask your question..."
+                autocomplete="off"
+            >
+
+            <button
+                class="send-btn"
+                onclick="sendQuestion()"
+            >
+                ➤
+            </button>
+
+        </div>
+
+        <p class="disclaimer">
+            A/L AI can make mistakes. Check important answers.
+        </p>
+
+    </footer>
+
+
+    <script src="chat.js"></script>
+
+</body>
+
+</html>
