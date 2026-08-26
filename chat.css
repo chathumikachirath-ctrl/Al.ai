@@ -348,14 +348,59 @@ body {
     }
 
 }
+/* =========================
+   FIXED CHAT INPUT
+========================= */
+
+.input-area {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    z-index: 9999;
+
+    pointer-events: auto;
+}
+
 .input-box {
     position: relative;
-    z-index: 1000;
+    z-index: 10000;
+
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    pointer-events: auto;
 }
 
 .input-box input {
+    display: block;
+
+    width: 100%;
+    min-width: 0;
+
+    flex: 1;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    color: #172033;
+
+    font-size: 16px;
+
+    padding: 12px;
+
     pointer-events: auto;
     user-select: text;
-    position: relative;
-    z-index: 1001;
+    -webkit-user-select: text;
+
+    z-index: 10001;
+}
+
+.input-box input::placeholder {
+    color: #9aa4b5;
 }
