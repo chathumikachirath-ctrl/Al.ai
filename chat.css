@@ -348,3 +348,14 @@ body {
     }
 
 }
+.input-box {
+    position: relative;
+    z-index: 1000;
+}
+
+.input-box input {
+    pointer-events: auto;
+    user-select: text;
+    position: relative;
+    z-index: 1001;
+}
