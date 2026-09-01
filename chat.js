@@ -57,7 +57,10 @@ async function sendQuestion() {
       console.error(data);
 
       addMessage(
-        "❌ AI Error: " + (data.error || "Unknown error"),
+        "❌ AI Error: " +
+(data.error || "Unknown error") +
+"\n\nDetails: " +
+JSON.stringify(data.details || ""),
         "ai"
       );
 
